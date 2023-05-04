@@ -22,7 +22,7 @@ public class MainFrame extends JFrame {
     /**
      * Заголовок.
      */
-    public static final String TITLE = "Ovation Prime Визуализатор v1.6";
+    public static final String TITLE = "Ovation Prime Визуализатор v1.7";
 
     /**
      * Основной контейнер.
