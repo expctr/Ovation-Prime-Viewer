@@ -38,10 +38,10 @@ public class Model {
      */
     private static final int END_INDEX = 7684;
 
-    /**
-     * Класс с информацией о выбранном типе файлов для визуализации.
-     */
-    public FileType fileType = new FileType(HorizonSideType.NORTH, CastType.NOWCAST, EnergyType.TOTAL);
+//    /**
+//     * Класс с информацией о выбранном типе файлов для визуализации.
+//     */
+//    public FileType fileType = new FileType(HorizonSideType.NORTH, CastType.NOWCAST, EnergyType.TOTAL);
 
     /**
      * Индекс текущего файла.
@@ -208,28 +208,32 @@ public class Model {
      */
     public boolean showInfoFlag = false;
 
-    /**
-     * Флажок, который поднят, если на компоненте для рисования
-     * нужно отображать границу.
-     */
-    public boolean showMarginFlag = true;
+    private Options options;
 
-    /**
-     * Флажок, который поднят, если на компоненте для рисования
-     * нужно отображать тепловую карту.
-     */
-    public boolean showHeatmapFlag = true;
+//    /**
+//     * Флажок, который поднят, если на компоненте для рисования
+//     * нужно отображать границу.
+//     */
+//    public boolean showMarginFlag = true;
 
-    /**
-     * Флажок, который поднят, если на компоненте для рисования
-     * нужно отображать сглаженную границу.
-     */
-    public boolean smoothMarginFlag = true;
+//    /**
+//     * Флажок, который поднят, если на компоненте для рисования
+//     * нужно отображать тепловую карту.
+//     */
+//    public boolean showHeatmapFlag = true;
+
+//    /**
+//     * Флажок, который поднят, если на компоненте для рисования
+//     * нужно отображать сглаженную границу.
+//     */
+//    public boolean smoothMarginFlag = true;
 
     /**
      * Время ожидания в секундах между сеансами автозаргузки данных.
      */
-    public int waitingTimeInSeconds = 3600;
+    public int previousWaitingTimeInSeconds = -1;
+
+    public FileType previousFileType = null;
 
     /**
      * Выбранная папка с данными для визуализации.
@@ -241,10 +245,10 @@ public class Model {
      */
     public int mouseAdapterX;
 
-    /**
-     * Уровень границы.
-     */
-    public float marginLevel = 0.6f;
+//    /**
+//     * Уровень границы.
+//     */
+//    public float marginLevel = 0.6f;
 
     /**
      * Координата y адаптера мыши.
@@ -279,14 +283,50 @@ public class Model {
         this.mainFrame = mainFrame;
     }
 
+    public void loadOptions() {
+        try {
+            setOptions(Options.read());
+        } catch (Exception exception) {
+            setOptions(new Options());
+
+            try {
+                options.write();
+            } catch (Exception innerException){
+                innerException.printStackTrace();
+            }
+        }
+    }
+
+    public void setOptions(Options options) {
+        this.options = options;
+
+        try {
+            this.options.write();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+
+        if ((previousFileType == null) || (!previousFileType.equals(options.fileType))) {
+            setFileType(options.fileType);
+            previousFileType = options.fileType;
+        }
+
+        mainFrame.controller.automaticDataDownloadCheckBoxListener();
+        previousWaitingTimeInSeconds = options.waitingTimeInSeconds;
+        mainFrame.visualize();
+    }
+
+    public Options getOptions() {
+        return options;
+    }
+
     /**
      * Устанавливаем тип фалов для визуализации.
      *
      * @param fileType описанный тип файлов.
      */
     public void setFileType(FileType fileType) {
-        this.fileType = fileType;
-        mainFrame.shownFileTypeTextField.setText(this.fileType.toString());
+        options.fileType = fileType;
         selectFiles();
     }
 
@@ -384,9 +424,9 @@ public class Model {
      * Выбираем список файлов для визуализации.
      */
     public void selectFiles() {
-        if (fileType.horizonSideType() == HorizonSideType.NORTH) {
+        if (options.fileType.horizonSideType() == HorizonSideType.NORTH) {
             selectNorthFiles();
-        } else if (fileType.horizonSideType() == HorizonSideType.SOUTH) {
+        } else if (options.fileType.horizonSideType() == HorizonSideType.SOUTH) {
             selectSouthFiles();
         }
 
@@ -416,9 +456,9 @@ public class Model {
      * северной полусфере.
      */
     private void selectNorthFiles() {
-        if (fileType.castType() == CastType.FORECAST) {
+        if (options.fileType.castType() == CastType.FORECAST) {
             selectNorthForecastFiles();
-        } else if (fileType.castType() == CastType.NOWCAST) {
+        } else if (options.fileType.castType() == CastType.NOWCAST) {
             selectNorthNowcastFiles();
         }
     }
@@ -442,9 +482,9 @@ public class Model {
      * южной полусфере.
      */
     private void selectSouthFiles() {
-        if (fileType.castType() == CastType.FORECAST) {
+        if (options.fileType.castType() == CastType.FORECAST) {
             selectSouthForecastFiles();
-        } else if (fileType.castType() == CastType.NOWCAST) {
+        } else if (options.fileType.castType() == CastType.NOWCAST) {
             selectSouthNowcastFiles();
         }
     }
@@ -474,13 +514,13 @@ public class Model {
      * северной полусфере, прогнозу.
      */
     private void selectNorthForecastFiles() {
-        if (fileType.energyType() == EnergyType.DIFFUSE) {
+        if (options.fileType.energyType() == EnergyType.DIFFUSE) {
             files = northForecastDiffuseEnergyFluxFiles;
-        } else if (fileType.energyType() == EnergyType.IONS) {
+        } else if (options.fileType.energyType() == EnergyType.IONS) {
             files = northForecastIonsEnergyFluxFiles;
-        } else if (fileType.energyType() == EnergyType.MONO) {
+        } else if (options.fileType.energyType() == EnergyType.MONO) {
             files = northForecastMonoEnergyFluxFiles;
-        } else if (fileType.energyType() == EnergyType.WAVE) {
+        } else if (options.fileType.energyType() == EnergyType.WAVE) {
             files = northForecastWaveEnergyFluxFiles;
         } else {
             files = northForecastEnergyFluxFiles;
@@ -512,13 +552,13 @@ public class Model {
      * северной полусфере, наблюдаемым данным.
      */
     private void selectNorthNowcastFiles() {
-        if (fileType.energyType() == EnergyType.DIFFUSE) {
+        if (options.fileType.energyType() == EnergyType.DIFFUSE) {
             files = northNowcastDiffuseEnergyFluxFiles;
-        } else if (fileType.energyType() == EnergyType.IONS) {
+        } else if (options.fileType.energyType() == EnergyType.IONS) {
             files = northNowcastIonsEnergyFluxFiles;
-        } else if (fileType.energyType() == EnergyType.MONO) {
+        } else if (options.fileType.energyType() == EnergyType.MONO) {
             files = northNowcastMonoEnergyFluxFiles;
-        } else if (fileType.energyType() == EnergyType.WAVE) {
+        } else if (options.fileType.energyType() == EnergyType.WAVE) {
             files = northNowcastWaveEnergyFluxFiles;
         } else {
             files = northNowcastEnergyFluxFiles;
@@ -550,13 +590,13 @@ public class Model {
      * южной полусфере, прогнозу.
      */
     private void selectSouthForecastFiles() {
-        if (fileType.energyType() == EnergyType.DIFFUSE) {
+        if (options.fileType.energyType() == EnergyType.DIFFUSE) {
             files = southForecastDiffuseEnergyFluxFiles;
-        } else if (fileType.energyType() == EnergyType.IONS) {
+        } else if (options.fileType.energyType() == EnergyType.IONS) {
             files = southForecastIonsEnergyFluxFiles;
-        } else if (fileType.energyType() == EnergyType.MONO) {
+        } else if (options.fileType.energyType() == EnergyType.MONO) {
             files = southForecastMonoEnergyFluxFiles;
-        } else if (fileType.energyType() == EnergyType.WAVE) {
+        } else if (options.fileType.energyType() == EnergyType.WAVE) {
             files = southForecastWaveEnergyFluxFiles;
         } else {
             files = southForecastEnergyFluxFiles;
@@ -588,13 +628,13 @@ public class Model {
      * южной полусфере, наблюдаемым данным.
      */
     private void selectSouthNowcastFiles() {
-        if (fileType.energyType() == EnergyType.DIFFUSE) {
+        if (options.fileType.energyType() == EnergyType.DIFFUSE) {
             files = southNowcastDiffuseEnergyFluxFiles;
-        } else if (fileType.energyType() == EnergyType.IONS) {
+        } else if (options.fileType.energyType() == EnergyType.IONS) {
             files = southNowcastIonsEnergyFluxFiles;
-        } else if (fileType.energyType() == EnergyType.MONO) {
+        } else if (options.fileType.energyType() == EnergyType.MONO) {
             files = southNowcastMonoEnergyFluxFiles;
-        } else if (fileType.energyType() == EnergyType.WAVE) {
+        } else if (options.fileType.energyType() == EnergyType.WAVE) {
             files = southNowcastWaveEnergyFluxFiles;
         } else {
             files = southNowcastEnergyFluxFiles;

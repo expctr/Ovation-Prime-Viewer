@@ -69,13 +69,13 @@ public class Controller {
         mainFrame.visualizationComponent
                 .addMouseWheelListener(visualizationMouseAdapter);
 
-        mainFrame.selectShownFilesTypeButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                FileTypeFrame fileTypeFrame = new FileTypeFrame(mainFrame);
-                fileTypeFrame.setVisible(true);
-            }
-        });
+//        mainFrame.selectShownFilesTypeButton.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                FileTypeFrame fileTypeFrame = new FileTypeFrame(mainFrame);
+//                fileTypeFrame.setVisible(true);
+//            }
+//        });
 
         mainFrame.selectFolderButton
                 .addMouseListener(
@@ -147,30 +147,30 @@ public class Controller {
             }
         });
 
-        mainFrame.changeColorIndicatorLimitButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                try {
-                    float newColorIndicatorLimit
-                            = Float.parseFloat(mainFrame.colorIndicatorLimitTextField.getText());
-
-                    if (newColorIndicatorLimit <= 0) {
-                        JOptionPane.showMessageDialog(
-                                null,
-                                "Предельное значение цветового индикатора должно быть положительным.");
-                        return;
-                    }
-
-                    mainFrame.colorIndicatorLimitTextField.setText("");
-                    GeoinformationDataUnit.maxValue = newColorIndicatorLimit;
-                    mainFrame.visualize();
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(
-                            null,
-                            "Новое предельное значение цветового индикатора введено некорректно.");
-                }
-            }
-        });
+//        mainFrame.changeColorIndicatorLimitButton.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                try {
+//                    float newColorIndicatorLimit
+//                            = Float.parseFloat(mainFrame.colorIndicatorLimitTextField.getText());
+//
+//                    if (newColorIndicatorLimit <= 0) {
+//                        JOptionPane.showMessageDialog(
+//                                null,
+//                                "Предельное значение цветового индикатора должно быть положительным.");
+//                        return;
+//                    }
+//
+//                    mainFrame.colorIndicatorLimitTextField.setText("");
+//                    GeoinformationDataUnit.maxValue = newColorIndicatorLimit;
+//                    mainFrame.visualize();
+//                } catch (NumberFormatException ex) {
+//                    JOptionPane.showMessageDialog(
+//                            null,
+//                            "Новое предельное значение цветового индикатора введено некорректно.");
+//                }
+//            }
+//        });
 
         mainFrame.selectDateAndTimeButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -218,80 +218,88 @@ public class Controller {
             }
         });
 
-        mainFrame.paintMarginCheckBox.addActionListener(e -> {
-            model.showMarginFlag = mainFrame.paintMarginCheckBox.isSelected();
-            mainFrame.visualize();
-        });
-
-        mainFrame.paintHeatmapCheckBox.addActionListener(e -> {
-            model.showHeatmapFlag = mainFrame.paintHeatmapCheckBox.isSelected();
-            mainFrame.visualize();
-        });
-
-        mainFrame.smoothMarginCheckBox.addActionListener(e -> {
-            model.smoothMarginFlag = mainFrame.smoothMarginCheckBox.isSelected();
-            mainFrame.visualize();
-        });
-
-        mainFrame.specifyMarginLevelButton.addActionListener(e -> {
-            try {
-
-                mainFrame.model.marginLevel
-                        = Float.parseFloat(mainFrame.marginLevelTextField.getText());
-                mainFrame.visualize();
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(
-                        null,
-                        "Новый уровень границы указан некорректно.");
+        mainFrame.optionsButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                OptionsFrame optionsFrame = new OptionsFrame(mainFrame);
+                optionsFrame.setVisible(true);
             }
         });
 
-        mainFrame.changeWaitingTimeButton.addActionListener(e -> {
-            try {
-                int waitingTimeInSeconds
-                        = Integer.parseInt(mainFrame.changeWaitingTimeTextField.getText());
+//        mainFrame.paintMarginCheckBox.addActionListener(e -> {
+//            model.showMarginFlag = mainFrame.paintMarginCheckBox.isSelected();
+//            mainFrame.visualize();
+//        });
 
-                if (waitingTimeInSeconds < 0) {
-                    JOptionPane.showMessageDialog(null,
-                            "Время ожидания не может быть отрицательным.");
-                    return;
-                }
+//        mainFrame.paintHeatmapCheckBox.addActionListener(e -> {
+//            model.showHeatmapFlag = mainFrame.paintHeatmapCheckBox.isSelected();
+//            mainFrame.visualize();
+//        });
 
-                mainFrame.model.waitingTimeInSeconds = waitingTimeInSeconds;
+//        mainFrame.smoothMarginCheckBox.addActionListener(e -> {
+//            model.smoothMarginFlag = mainFrame.smoothMarginCheckBox.isSelected();
+//            mainFrame.visualize();
+//        });
 
-                boolean automaticDataDownloadFlag = mainFrame.automaticDataDownloadCheckBox.isSelected();
-                timer.cancel();
-                timer = new Timer();
-                mainFrame.changeWaitingTimeTextField.setText("");
-                mainFrame.visualize();
-                if (automaticDataDownloadFlag) {
-                    if (mainFrame.automaticDataDownloadCheckBox.isSelected()) {
-                        timer.schedule(new TimerTask() {
-                            @Override
-                            public void run() {
-                                if (model.selectedFolder == null) {
-                                    JOptionPane.showMessageDialog(null,
-                                            "Папка для загрузки данных не выбрана.");
-                                    return;
-                                }
+//        mainFrame.specifyMarginLevelButton.addActionListener(e -> {
+//            try {
+//
+//                mainFrame.model.marginLevel
+//                        = Float.parseFloat(mainFrame.marginLevelTextField.getText());
+//                mainFrame.visualize();
+//            } catch (NumberFormatException ex) {
+//                JOptionPane.showMessageDialog(
+//                        null,
+//                        "Новый уровень границы указан некорректно.");
+//            }
+//        });
 
-                                doFilesProcessing(model.selectedFolder, mainFrame, model);
-                            }
-                        }, model.waitingTimeInSeconds * 1000L, model.waitingTimeInSeconds * 1000L);
-                    } else {
-                        timer.cancel();
-                        timer = new Timer();
-                    }
-                }
-            } catch (NumberFormatException exception) {
-                JOptionPane.showMessageDialog(null,
-                        "Новое время ожидания указано некорректно.");
-            }
-        });
+//        mainFrame.changeWaitingTimeButton.addActionListener(e -> {
+//            try {
+//                int waitingTimeInSeconds
+//                        = Integer.parseInt(mainFrame.changeWaitingTimeTextField.getText());
+//
+//                if (waitingTimeInSeconds < 0) {
+//                    JOptionPane.showMessageDialog(null,
+//                            "Время ожидания не может быть отрицательным.");
+//                    return;
+//                }
+//
+//                mainFrame.model.waitingTimeInSeconds = waitingTimeInSeconds;
+//
+//                boolean automaticDataDownloadFlag = mainFrame.automaticDataDownloadCheckBox.isSelected();
+//                timer.cancel();
+//                timer = new Timer();
+//                mainFrame.changeWaitingTimeTextField.setText("");
+//                mainFrame.visualize();
+//                if (automaticDataDownloadFlag) {
+//                    if (mainFrame.automaticDataDownloadCheckBox.isSelected()) {
+//                        timer.schedule(new TimerTask() {
+//                            @Override
+//                            public void run() {
+//                                if (model.selectedFolder == null) {
+//                                    JOptionPane.showMessageDialog(null,
+//                                            "Папка для загрузки данных не выбрана.");
+//                                    return;
+//                                }
+//
+//                                doFilesProcessing(model.selectedFolder, mainFrame, model);
+//                            }
+//                        }, model.waitingTimeInSeconds * 1000L, model.waitingTimeInSeconds * 1000L);
+//                    } else {
+//                        timer.cancel();
+//                        timer = new Timer();
+//                    }
+//                }
+//            } catch (NumberFormatException exception) {
+//                JOptionPane.showMessageDialog(null,
+//                        "Новое время ожидания указано некорректно.");
+//            }
+//        });
 
-        mainFrame.automaticDataDownloadCheckBox.addActionListener(e -> {
-            automaticDataDownloadCheckBoxListener();
-        });
+//        mainFrame.automaticDataDownloadCheckBox.addActionListener(e -> {
+//            automaticDataDownloadCheckBoxListener();
+//        });
     }
 
     /**
@@ -507,43 +515,25 @@ public class Controller {
          */
         @Override
         public void mouseClicked(MouseEvent e) {
-            BufferedReader reader;
+            String line = model.getOptions().defaultFolderAbsolutePath;
+            File folder;
 
             try {
-                reader = new BufferedReader(new FileReader("default.txt", StandardCharsets.UTF_8));
-                String line = reader.readLine();
-                File folder;
-
-                try {
-                    folder = new File(line);
-                } catch (Exception exception) {
-                    JOptionPane.showMessageDialog(null,
-                            "Ошибка при попытке открыть папку по умолчанию.");
-                    return;
-                }
-
-                try {
-                    mainFrame.model.selectedFolder = folder;
-                    mainFrame.selectedFolderTextField.setText(folder.getAbsolutePath());
-
-                    new Thread(() -> {
-                        doFilesProcessing(folder, mainFrame, model);
-                    }).start();
-                } catch (Exception exception) {
-                    JOptionPane.showMessageDialog(null,
-                            "Ошибка при попытке открыть папку по умолчанию.");
-                }
-
-                reader.close();
-            } catch (FileNotFoundException exception) {
+                folder = new File(line);
+            } catch (Exception exception) {
                 JOptionPane.showMessageDialog(null,
-                        "Папка по умолчанию не обнаружена.");
-                File file = new File("default.txt");
-                try {
-                    file.createNewFile();
-                } catch (IOException ignored) {
-                }
-            } catch (IOException exception) {
+                        "Ошибка при попытке открыть папку по умолчанию.");
+                return;
+            }
+
+            try {
+                mainFrame.model.selectedFolder = folder;
+                mainFrame.selectedFolderTextField.setText(folder.getAbsolutePath());
+
+                new Thread(() -> {
+                    doFilesProcessing(folder, mainFrame, model);
+                }).start();
+            } catch (Exception exception) {
                 JOptionPane.showMessageDialog(null,
                         "Ошибка при попытке открыть папку по умолчанию.");
             }
@@ -630,19 +620,28 @@ public class Controller {
     }
 
     public void automaticDataDownloadCheckBoxListener() {
-        if (mainFrame.automaticDataDownloadCheckBox.isSelected()) {
+        if (mainFrame.model.getOptions().automaticDataDownloadFlag) {
+
+            if (mainFrame.model.previousWaitingTimeInSeconds
+                    == mainFrame.model.getOptions().waitingTimeInSeconds) {
+                return;
+            }
+
+            timer.cancel();
+            timer = new Timer();
+            mainFrame.model.previousWaitingTimeInSeconds
+                    = mainFrame.model.getOptions().waitingTimeInSeconds;
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     if (model.selectedFolder == null) {
-                        JOptionPane.showMessageDialog(null,
-                                "Папка для загрузки данных не выбрана.");
                         return;
                     }
 
                     doFilesProcessing(model.selectedFolder, mainFrame, model);
                 }
-            }, model.waitingTimeInSeconds * 1000L, model.waitingTimeInSeconds * 1000L);
+            }, model.getOptions().waitingTimeInSeconds * 1000L,
+                    model.getOptions().waitingTimeInSeconds * 1000L);
         } else {
             timer.cancel();
             timer = new Timer();

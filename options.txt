@@ -1,0 +1,11 @@
+D:\Ovation Prime\год\месяц
+north
+forecast
+total
+1.5
+true
+true
+true
+0.6
+false
+3600

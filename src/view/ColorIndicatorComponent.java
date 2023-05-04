@@ -23,6 +23,12 @@ public class ColorIndicatorComponent extends JComponent {
     private static final Font COLOR_INDICATOR_LABELS_FONT
             = new Font("Arial", Font.PLAIN, 12);
 
+    public final MainFrame mainFrame;
+
+    public ColorIndicatorComponent(MainFrame mainFrame) {
+        this.mainFrame = mainFrame;
+    }
+
     /**
      * Раскрашиваем компоненту.
      *
@@ -86,9 +92,9 @@ public class ColorIndicatorComponent extends JComponent {
             );
 
             double ratio = (double) i / totalNumberOfInnerRectangles;
-            double value = GeoinformationDataUnit.maxValue * (1 - ratio);
+            double value = mainFrame.model.getOptions().colorIndicatorLimit * (1 - ratio);
 
-            Color color = GeoinformationDataUnit.getColor(value);
+            Color color = GeoinformationDataUnit.getColor(value, mainFrame.model.getOptions().colorIndicatorLimit);
 
             graphics2D.setPaint(color);
             graphics2D.fillRect(
@@ -143,13 +149,13 @@ public class ColorIndicatorComponent extends JComponent {
         graphics2D.setFont(COLOR_INDICATOR_LABELS_FONT);
 
         graphics2D.drawString(
-                new DecimalFormat("#0.00").format(GeoinformationDataUnit.maxValue),
+                new DecimalFormat("#0.00").format(mainFrame.model.getOptions().colorIndicatorLimit),
                 (float) (outerRectangle.x + outerRectangle.getWidth() * 1.3),
                 (float) outerRectangle.y
         );
 
         graphics2D.drawString(
-                new DecimalFormat("#0.00").format(GeoinformationDataUnit.maxValue / 2),
+                new DecimalFormat("#0.00").format(mainFrame.model.getOptions().colorIndicatorLimit / 2),
                 (float) (outerRectangle.x + outerRectangle.getWidth() * 1.3),
                 outerRectangle.y + outerRectangle.height / 2f
         );

@@ -101,7 +101,7 @@ public class VisualizationComponent extends JComponent {
 
         paintBackground(graphics2D);
 
-        if (mainFrame.model.showHeatmapFlag) {
+        if (mainFrame.model.getOptions().paintHeatmapFlag) {
             paintGeoinformationDataUnits(graphics2D);
         }
 
@@ -110,8 +110,8 @@ public class VisualizationComponent extends JComponent {
         paintThinGridLines(graphics2D);
         paintThickGridLines(graphics2D);
 
-        if (mainFrame.model.showMarginFlag) {
-            if (mainFrame.model.smoothMarginFlag) {
+        if (mainFrame.model.getOptions().paintMarginFlag) {
+            if (mainFrame.model.getOptions().smoothMarginFlag) {
                 mainFrame.model.prepareToDrawSmoothMargin();
                 drawSmoothMargin(graphics2D);
             } else {
@@ -295,7 +295,7 @@ public class VisualizationComponent extends JComponent {
         float y4 = fourthPoint.y;
 
         display.fillTetragon((int)x1, (int)y1, (int)x2, (int)y2, (int)x3, (int)y3, (int)x4, (int)y4,
-                geoinformationDataUnit.getColor(), graphics2D);
+                geoinformationDataUnit.getColor(mainFrame.model.getOptions().colorIndicatorLimit), graphics2D);
     }
 
     /**
@@ -610,9 +610,11 @@ public class VisualizationComponent extends JComponent {
      */
     public boolean marginIsLocated(double firstValue, double secondValue) {
         return (
-                (firstValue >= mainFrame.model.marginLevel) && (secondValue < mainFrame.model.marginLevel)
+                (firstValue >= mainFrame.model.getOptions().marginLevel)
+                        && (secondValue < mainFrame.model.getOptions().marginLevel)
                 ) || (
-                (firstValue < mainFrame.model.marginLevel) && (secondValue >= mainFrame.model.marginLevel)
+                (firstValue < mainFrame.model.getOptions().marginLevel)
+                        && (secondValue >= mainFrame.model.getOptions().marginLevel)
                 );
     }
 

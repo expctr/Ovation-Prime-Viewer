@@ -84,7 +84,7 @@ public class FileTypeFrame extends JFrame {
         setSizeAndLocation();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         marshalContainer();
-        setFileType(mainFrame.model.fileType);
+        setFileType(mainFrame.model.getOptions().fileType);
         addActionListeners();
     }
 
@@ -224,17 +224,17 @@ public class FileTypeFrame extends JFrame {
             monoCheckBox.setSelected(false);
         });
 
-        applyButton.addActionListener(e -> {
-            FileType fileType = getFileType();
-
-            if (fileType == null) {
-                JOptionPane.showMessageDialog(null, "Ошибка. Один из параметров не выбран.");
-                return;
-            }
-
-            mainFrame.model.setFileType(fileType);
-            dispose();
-        });
+//        applyButton.addActionListener(e -> {
+//            FileType fileType = getFileType();
+//
+//            if (fileType == null) {
+//                JOptionPane.showMessageDialog(null, "Ошибка. Один из параметров не выбран.");
+//                return;
+//            }
+//
+//            mainFrame.model.setFileType(fileType);
+//            dispose();
+//        });
     }
 
     /**

@@ -89,31 +89,31 @@ public class MainFrame extends JFrame {
      */
     public final JButton selectDateAndTimeButton = new JButton("Выбрать дату и время");
 
-    /**
-     * Кнопка "Выбрать тип отображаемых файлов".
-     */
-    public final JButton selectShownFilesTypeButton = new JButton("Выбрать тип отображаемых файлов");
+//    /**
+//     * Кнопка "Выбрать тип отображаемых файлов".
+//     */
+//    public final JButton selectShownFilesTypeButton = new JButton("Выбрать тип отображаемых файлов");
 
-    /**
-     * Текствое поле для отображения выбранного типа файлов.
-     */
-    public final JTextField shownFileTypeTextField = new JTextField(40);
+//    /**
+//     * Текствое поле для отображения выбранного типа файлов.
+//     */
+//    public final JTextField shownFileTypeTextField = new JTextField(40);
 
-    /**
-     * Надпись "Предельное значение цветовой шкалы:".
-     */
-    public final JLabel colorIndicatorLimitLabel = new JLabel("Предельное значение цветовой шкалы:");
+//    /**
+//     * Надпись "Предельное значение цветовой шкалы:".
+//     */
+//    public final JLabel colorIndicatorLimitLabel = new JLabel("Предельное значение цветовой шкалы:");
 
-    /**
-     * Текстовое поле для отображения предельного значения цветовой шкалы.
-     */
-    public final JTextField colorIndicatorLimitTextField = new JTextField();
+//    /**
+//     * Текстовое поле для отображения предельного значения цветовой шкалы.
+//     */
+//    public final JTextField colorIndicatorLimitTextField = new JTextField();
 
-    /**
-     * Кнопка "Изменить" для смены предельного значения цветовой шкалы.
-     */
-    public final JButton changeColorIndicatorLimitButton
-            = new JButton("Изменить предельное значение цветовой шкалы");
+//    /**
+//     * Кнопка "Изменить" для смены предельного значения цветовой шкалы.
+//     */
+//    public final JButton changeColorIndicatorLimitButton
+//            = new JButton("Изменить предельное значение цветовой шкалы");
 
     /**
      * Кнопка "Предыдущий файл".
@@ -165,62 +165,64 @@ public class MainFrame extends JFrame {
      */
     public final JButton defaultOffsetAndScaleButton = new JButton("Сдвиг и масштаб по умолчанию");
 
-    /**
-     * Флажок "Отображать тепловую карту".
-     */
-    public final JCheckBox paintHeatmapCheckBox = new JCheckBox("Отображать тепловую карту");
+//    /**
+//     * Флажок "Отображать тепловую карту".
+//     */
+//    public final JCheckBox paintHeatmapCheckBox = new JCheckBox("Отображать тепловую карту");
 
-    /**
-     * Флажок "Отображать границу".
-     */
-    public final JCheckBox paintMarginCheckBox = new JCheckBox("Отображать границу");
+//    /**
+//     * Флажок "Отображать границу".
+//     */
+//    public final JCheckBox paintMarginCheckBox = new JCheckBox("Отображать границу");
 
-    /**
-     * Флажок "Гладкая граница".
-     */
-    public final JCheckBox smoothMarginCheckBox = new JCheckBox("Гладкая граница");
+//    /**
+//     * Флажок "Гладкая граница".
+//     */
+//    public final JCheckBox smoothMarginCheckBox = new JCheckBox("Гладкая граница");
 
-    /**
-     * Надпись "Уровень границы:".
-     */
-    public final JLabel marginLevelLabel = new JLabel("Уровень границы:");
+//    /**
+//     * Надпись "Уровень границы:".
+//     */
+//    public final JLabel marginLevelLabel = new JLabel("Уровень границы:");
 
-    /**
-     * Текстовое поле для отображения уровня границы.
-     */
-    public final JTextField marginLevelTextField = new JTextField();
+//    /**
+//     * Текстовое поле для отображения уровня границы.
+//     */
+//    public final JTextField marginLevelTextField = new JTextField();
 
-    /**
-     * Кнопка "Задать".
-     */
-    public final JButton specifyMarginLevelButton = new JButton("Задать");
+//    /**
+//     * Кнопка "Задать".
+//     */
+//    public final JButton specifyMarginLevelButton = new JButton("Задать");
 
-    /**
-     * Флажок "Автозагрузка данных".
-     */
-    public final JCheckBox automaticDataDownloadCheckBox = new JCheckBox("Автозагрузка данных");
+//    /**
+//     * Флажок "Автозагрузка данных".
+//     */
+//    public final JCheckBox automaticDataDownloadCheckBox = new JCheckBox("Автозагрузка данных");
 
-    /**
-     * Надпись "Время ожидания в секундах:".
-     */
-    public final JLabel waitingTimeLabel = new JLabel("Время ожидания в секундах:");
+//    /**
+//     * Надпись "Время ожидания в секундах:".
+//     */
+//    public final JLabel waitingTimeLabel = new JLabel("Время ожидания в секундах:");
 
-    /**
-     * Текстовое поле для отображения времени ожидания между
-     * сеансами автозагрузки данных.
-     */
-    public final JTextField waitingTimeTextField = new JTextField();
+//    /**
+//     * Текстовое поле для отображения времени ожидания между
+//     * сеансами автозагрузки данных.
+//     */
+//    public final JTextField waitingTimeTextField = new JTextField();
 
-    /**
-     * Кнопка "Изменить на".
-     */
-    public final JButton changeWaitingTimeButton = new JButton("Изменить на");
+//    /**
+//     * Кнопка "Изменить на".
+//     */
+//    public final JButton changeWaitingTimeButton = new JButton("Изменить на");
 
-    /**
-     * Текстовое поле для изменения времени ожидания между
-     * сеансами автозагрузки данных.
-     */
-    public final JTextField changeWaitingTimeTextField = new JTextField();
+//    /**
+//     * Текстовое поле для изменения времени ожидания между
+//     * сеансами автозагрузки данных.
+//     */
+//    public final JTextField changeWaitingTimeTextField = new JTextField();
+
+    public final JButton optionsButton = new JButton("Настройки");
 
     /**
      * Компонента для визуализации.
@@ -230,12 +232,14 @@ public class MainFrame extends JFrame {
     /**
      * Компонента для отображения цветового индикатора.
      */
-    public final ColorIndicatorComponent colorIndicatorComponent = new ColorIndicatorComponent();
+    public final ColorIndicatorComponent colorIndicatorComponent = new ColorIndicatorComponent(this);
 
     /**
      * Модель для паттерна MVC.
      */
     public Model model;
+
+    public Controller controller;
 
     /**
      * Конструктор.
@@ -250,14 +254,15 @@ public class MainFrame extends JFrame {
 
         model = new Model(this);
 
-        Controller controller = new Controller(this, model);
+        controller = new Controller(this, model);
         controller.addEventListeners();
 
-        showFileType();
+//        showFileType();
+        model.loadOptions();
         visualize();
 
-        automaticDataDownloadCheckBox.setSelected(true);
-        controller.automaticDataDownloadCheckBoxListener();
+        // automaticDataDownloadCheckBox.setSelected(true);
+//        controller.automaticDataDownloadCheckBoxListener();
     }
 
     /**
@@ -311,13 +316,13 @@ public class MainFrame extends JFrame {
         dateLabel.setBounds(10, 280, 30, 25);
         datePickerUtil.datePicker.setBounds(45, 280, 110, 25);
         timeLabel.setBounds(160, 280, 40, 25);
-        timeTextField.setBounds(205, 280, 85, 25);
+        timeTextField.setBounds(198, 280, 92, 25);
         selectDateAndTimeButton.setBounds(10, 310, 280, 25);
-        shownFileTypeTextField.setBounds(10, 340, 280, 25);
-        selectShownFilesTypeButton.setBounds(10, 370, 280, 25);
-        colorIndicatorLimitLabel.setBounds(10, 400, 200, 25);
-        colorIndicatorLimitTextField.setBounds(205, 400, 85, 25);
-        changeColorIndicatorLimitButton.setBounds(10, 430, 280, 25);
+//        shownFileTypeTextField.setBounds(10, 340, 280, 25);
+//        selectShownFilesTypeButton.setBounds(10, 370, 280, 25);
+//        colorIndicatorLimitLabel.setBounds(10, 400, 200, 25);
+//        colorIndicatorLimitTextField.setBounds(205, 400, 85, 25);
+//        changeColorIndicatorLimitButton.setBounds(10, 430, 280, 25);
         gotoPreviousFileButton.setBounds(10, 190, 137, 25);
         gotoNextFileButton.setBounds(152, 190, 138, 25);
         currentFileNumberLabel.setBounds(10, 220, 70, 25);
@@ -326,27 +331,28 @@ public class MainFrame extends JFrame {
         totalFileNumberTextField.setBounds(198, 220, 92, 25);
         gotoFileButton.setBounds(10, 250, 182, 25);
         fileNumberTextField.setBounds(198, 250, 92, 25);
-        defaultOffsetAndScaleButton.setBounds(10, 460, 280, 25);
-        paintHeatmapCheckBox.setBounds(10, 490, 280, 25);
-        paintMarginCheckBox.setBounds(10, 520, 280, 25);
-        smoothMarginCheckBox.setBounds(10, 550, 280, 25);
-        marginLevelLabel.setBounds(10, 580, 100, 25);
-        marginLevelTextField.setBounds(115, 580, 70, 25);
-        specifyMarginLevelButton.setBounds(190, 580, 100, 25);
-        automaticDataDownloadCheckBox.setBounds(10, 610, 280, 25);
-        waitingTimeLabel.setBounds(10, 640, 150, 25);
-        waitingTimeTextField.setBounds(155, 640, 135, 25);
-        changeWaitingTimeButton.setBounds(10, 670, 140, 25);
-        changeWaitingTimeTextField.setBounds(155, 670, 135, 25);
-        progressBar.setBounds(10, 710, 280, 10);
+        defaultOffsetAndScaleButton.setBounds(10, 340, 280, 25);
+        optionsButton.setBounds(10, 370, 280, 25);
+        progressBar.setBounds(10, 400, 280, 10);
+//        paintHeatmapCheckBox.setBounds(10, 490, 280, 25);
+//        paintMarginCheckBox.setBounds(10, 520, 280, 25);
+//        smoothMarginCheckBox.setBounds(10, 550, 280, 25);
+//        marginLevelLabel.setBounds(10, 580, 100, 25);
+//        marginLevelTextField.setBounds(115, 580, 70, 25);
+//        specifyMarginLevelButton.setBounds(190, 580, 100, 25);
+//        automaticDataDownloadCheckBox.setBounds(10, 610, 280, 25);
+//        waitingTimeLabel.setBounds(10, 640, 150, 25);
+//        waitingTimeTextField.setBounds(155, 640, 135, 25);
+//        changeWaitingTimeButton.setBounds(10, 670, 140, 25);
+//        changeWaitingTimeTextField.setBounds(155, 670, 135, 25);
 
         colorIndicatorComponent.setBounds(300, 0, 115, getHeight());
         visualizationComponent.setBounds(415, 0, getWidth() - 415, getHeight());
 
-        shownFileTypeTextField.setEditable(false);
+//        shownFileTypeTextField.setEditable(false);
         currentFileNumberTextField.setEditable(false);
         totalFileNumberTextField.setEditable(false);
-        waitingTimeTextField.setEditable(false);
+//        waitingTimeTextField.setEditable(false);
 
         JPanel panel = new JPanel();
         panel.setLayout(null);
@@ -365,11 +371,11 @@ public class MainFrame extends JFrame {
         panel.add(timeLabel);
         panel.add(timeTextField);
         panel.add(selectDateAndTimeButton);
-        panel.add(shownFileTypeTextField);
-        panel.add(selectShownFilesTypeButton);
-        panel.add(colorIndicatorLimitLabel);
-        panel.add(colorIndicatorLimitTextField);
-        panel.add(changeColorIndicatorLimitButton);
+//        panel.add(shownFileTypeTextField);
+//        panel.add(selectShownFilesTypeButton);
+//        panel.add(colorIndicatorLimitLabel);
+//        panel.add(colorIndicatorLimitTextField);
+//        panel.add(changeColorIndicatorLimitButton);
         panel.add(gotoPreviousFileButton);
         panel.add(gotoNextFileButton);
         panel.add(currentFileNumberLabel);
@@ -379,18 +385,19 @@ public class MainFrame extends JFrame {
         panel.add(gotoFileButton);
         panel.add(fileNumberTextField);
         panel.add(defaultOffsetAndScaleButton);
-        panel.add(paintHeatmapCheckBox);
-        panel.add(paintMarginCheckBox);
-        panel.add(smoothMarginCheckBox);
-        panel.add(marginLevelLabel);
-        panel.add(marginLevelTextField);
-        panel.add(specifyMarginLevelButton);
-        panel.add(automaticDataDownloadCheckBox);
-        panel.add(waitingTimeLabel);
-        panel.add(waitingTimeTextField);
-        panel.add(changeWaitingTimeButton);
-        panel.add(changeWaitingTimeTextField);
+        panel.add(optionsButton);
         panel.add(progressBar);
+//        panel.add(paintHeatmapCheckBox);
+//        panel.add(paintMarginCheckBox);
+//        panel.add(smoothMarginCheckBox);
+//        panel.add(marginLevelLabel);
+//        panel.add(marginLevelTextField);
+//        panel.add(specifyMarginLevelButton);
+//        panel.add(automaticDataDownloadCheckBox);
+//        panel.add(waitingTimeLabel);
+//        panel.add(waitingTimeTextField);
+//        panel.add(changeWaitingTimeButton);
+//        panel.add(changeWaitingTimeTextField);
 
         container.add(panel);
         container.add(colorIndicatorComponent);
@@ -399,19 +406,19 @@ public class MainFrame extends JFrame {
         progressBar.setVisible(false);
     }
 
-    /**
-     * Отображаем выбранный тип файлов.
-     */
-    private void showFileType() {
-        shownFileTypeTextField.setText(model.fileType.toString());
-    }
+//    /**
+//     * Отображаем выбранный тип файлов.
+//     */
+//    private void showFileType() {
+//        shownFileTypeTextField.setText(model.fileType.toString());
+//    }
 
     /**
      * Производим визуализацию.
      */
     public void visualize() {
-        colorIndicatorLimitTextField
-                .setText(Float.toString(GeoinformationDataUnit.maxValue));
+//        colorIndicatorLimitTextField
+//                .setText(Float.toString(GeoinformationDataUnit.maxValue));
 
         if (model.geoinformationDataUnits.size() != 0) {
             int year = DateAndTimeUtil.getYearFromFileName(model.getCurrentFileName());
@@ -424,11 +431,11 @@ public class MainFrame extends JFrame {
             timeTextField.setText(String.format("%02d", hour) + ":" + String.format("%02d", minute));
         }
 
-        paintMarginCheckBox.setSelected(model.showMarginFlag);
-        paintHeatmapCheckBox.setSelected(model.showHeatmapFlag);
-        smoothMarginCheckBox.setSelected(model.smoothMarginFlag);
-        marginLevelTextField.setText(Float.toString(model.marginLevel));
-        waitingTimeTextField.setText(Integer.toString(model.waitingTimeInSeconds));
+//        paintMarginCheckBox.setSelected(model.showMarginFlag);
+//        paintHeatmapCheckBox.setSelected(model.showHeatmapFlag);
+//        smoothMarginCheckBox.setSelected(model.smoothMarginFlag);
+//        marginLevelTextField.setText(Float.toString(model.marginLevel));
+//        waitingTimeTextField.setText(Integer.toString(model.waitingTimeInSeconds));
 
         visualizationComponent.repaint();
         colorIndicatorComponent.repaint();

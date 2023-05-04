@@ -80,4 +80,10 @@ public record FileType(HorizonSideType horizonSideType,
             return "";
         }
     }
+
+    public boolean equals(FileType fileType) {
+        return (horizonSideType == fileType.horizonSideType)
+                && (castType == fileType.castType)
+                && (energyType == fileType.energyType);
+    }
 }

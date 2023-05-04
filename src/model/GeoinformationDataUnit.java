@@ -51,11 +51,11 @@ public class GeoinformationDataUnit {
      */
     private final static Color SEVENTH_COLOR = new Color(0, 0, 0);
 
-    /**
-     * Значение единицы геоинформационных данных, которое соответствует
-     * первому граничному цвету для цветового индикатора.
-     */
-    public static float maxValue = 1.5f;
+//    /**
+//     * Значение единицы геоинформационных данных, которое соответствует
+//     * первому граничному цвету для цветового индикатора.
+//     */
+//    public static float maxValue = 1.5f;
 
     /**
      * Полярный угол единицы геоинформационных данных.
@@ -174,8 +174,8 @@ public class GeoinformationDataUnit {
      *
      * @return цвет.
      */
-    public Color getColor() {
-        return getColor(value);
+    public Color getColor(double maxValue) {
+        return getColor(value, maxValue);
     }
 
     /**
@@ -260,7 +260,7 @@ public class GeoinformationDataUnit {
      * @param value указанное значение.
      * @return цвет, который соответсвтует указанному значению.
      */
-    public static Color getColor(double value) {
+    public static Color getColor(double value, double maxValue) {
         if (value > maxValue) {
             return FIRST_COLOR;
         } else if (value > maxValue / 3 * 2.5) {
