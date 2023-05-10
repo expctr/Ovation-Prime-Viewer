@@ -1,7 +1,7 @@
 D:\Ovation Prime\год\месяц
 north
 forecast
-total
+diffuse
 1.5
 true
 true
