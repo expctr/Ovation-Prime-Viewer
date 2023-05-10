@@ -11,6 +11,7 @@ import time.DateAndTimeUtil;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.util.Objects;
 
 /**
@@ -244,7 +245,7 @@ public class MainFrame extends JFrame {
     /**
      * Конструктор.
      */
-    public MainFrame() {
+    public MainFrame() throws IOException {
         setTitle(TITLE);
         setSizeAndLocation();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -252,7 +253,12 @@ public class MainFrame extends JFrame {
         trySetLookAndFeel();
         visualizationComponent.initDisplay();
 
-        model = new Model(this);
+        try {
+            model = new Model(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Ошибка при работе с файлом.");
+        }
 
         controller = new Controller(this, model);
         controller.addEventListeners();
@@ -416,7 +422,7 @@ public class MainFrame extends JFrame {
     /**
      * Производим визуализацию.
      */
-    public void visualize() {
+    public void visualize() throws IOException {
 //        colorIndicatorLimitTextField
 //                .setText(Float.toString(GeoinformationDataUnit.maxValue));
 

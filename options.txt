@@ -6,6 +6,6 @@ total
 true
 true
 true
-0.6
+0.3
 false
 3600

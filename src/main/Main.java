@@ -6,6 +6,8 @@ package main;
 
 import view.MainFrame;
 
+import java.io.IOException;
+
 /**
  * Класс с точкой входа в приложение.
  *
@@ -17,7 +19,7 @@ public class Main {
      *
      * @param args аргументы командной строки.
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         MainFrame mainFrame = new MainFrame();
         mainFrame.setVisible(true);
     }

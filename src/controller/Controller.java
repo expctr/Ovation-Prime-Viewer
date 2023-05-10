@@ -91,7 +91,11 @@ public class Controller {
                     return;
                 }
 
-                model.gotoPreviousFile();
+                try {
+                    model.gotoPreviousFile();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
 
@@ -102,7 +106,11 @@ public class Controller {
                     return;
                 }
 
-                model.gotoNextFile();
+                try {
+                    model.gotoNextFile();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
 
@@ -115,7 +123,13 @@ public class Controller {
         });
 
         mainFrame.fileNumberSlider
-                .addChangeListener(e -> model.gotoCertainFile(mainFrame.fileNumberSlider.getValue()));
+                .addChangeListener(e -> {
+                    try {
+                        model.gotoCertainFile(mainFrame.fileNumberSlider.getValue());
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                });
 
         mainFrame.gotoFileButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -142,7 +156,11 @@ public class Controller {
                     return;
                 }
 
-                model.gotoCertainFile(fileNumber - 1);
+                try {
+                    model.gotoCertainFile(fileNumber - 1);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
                 mainFrame.fileNumberTextField.setText("");
             }
         });
@@ -214,7 +232,11 @@ public class Controller {
                 calendar.set(Calendar.HOUR_OF_DAY, hour);
                 calendar.set(Calendar.MINUTE, minute);
 
-                model.gotoFileWithSelectedDateAndTime(calendar);
+                try {
+                    model.gotoFileWithSelectedDateAndTime(calendar);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
 
@@ -488,7 +510,11 @@ public class Controller {
                 mainFrame.selectedFolderTextField.setText(fileChooser.getSelectedFile().getAbsolutePath());
 
                 new Thread(() -> {
-                    doFilesProcessing(fileChooser.getSelectedFile(), mainFrame, model);
+                    try {
+                        doFilesProcessing(fileChooser.getSelectedFile(), mainFrame, model);
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
                 }).start();
             }
         }
@@ -531,7 +557,11 @@ public class Controller {
                 mainFrame.selectedFolderTextField.setText(folder.getAbsolutePath());
 
                 new Thread(() -> {
-                    doFilesProcessing(folder, mainFrame, model);
+                    try {
+                        doFilesProcessing(folder, mainFrame, model);
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
                 }).start();
             } catch (Exception exception) {
                 JOptionPane.showMessageDialog(null,
@@ -548,7 +578,7 @@ public class Controller {
      * @param mainFrame главный фрейм.
      * @param model модель.
      */
-    private static synchronized void doFilesProcessing(File file, MainFrame mainFrame, Model model) {
+    private static synchronized void doFilesProcessing(File file, MainFrame mainFrame, Model model) throws IOException {
         if (file == null) {
             return;
         }
@@ -601,7 +631,12 @@ public class Controller {
             Optional<String> fileExtension = getExtensionByStringHandling(entry.getName());
 
             if (fileExtension.isPresent() && fileExtension.get().equals("txt")) {
-                model.distributeFile(entry);
+                try {
+                    model.distributeFile(entry);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "Ошибка при работе с файлом.");
+                }
                 mainFrame.progressBar.setValue(mainFrame.progressBar.getValue() + 1);
             }
         }
@@ -638,7 +673,11 @@ public class Controller {
                         return;
                     }
 
-                    doFilesProcessing(model.selectedFolder, mainFrame, model);
+                    try {
+                        doFilesProcessing(model.selectedFolder, mainFrame, model);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }, model.getOptions().waitingTimeInSeconds * 1000L,
                     model.getOptions().waitingTimeInSeconds * 1000L);

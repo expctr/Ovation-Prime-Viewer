@@ -4,6 +4,7 @@ import model.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class OptionsFrame extends JFrame {
     // region Поля
@@ -314,7 +315,11 @@ public class OptionsFrame extends JFrame {
                 return;
             }
 
-            mainFrame.model.setOptions(options);
+            try {
+                mainFrame.model.setOptions(options);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         });
 
         cancelChangesButton.addActionListener(e -> {

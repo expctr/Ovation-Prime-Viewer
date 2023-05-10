@@ -10,7 +10,9 @@ import view.MainFrame;
 import view.PointF;
 
 import javax.swing.*;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -38,11 +40,6 @@ public class Model {
      */
     private static final int END_INDEX = 7684;
 
-//    /**
-//     * Класс с информацией о выбранном типе файлов для визуализации.
-//     */
-//    public FileType fileType = new FileType(HorizonSideType.NORTH, CastType.NOWCAST, EnergyType.TOTAL);
-
     /**
      * Индекс текущего файла.
      */
@@ -53,154 +50,216 @@ public class Model {
      */
     public final MainFrame mainFrame;
 
-    /**
-     * Список имен файлов с данными Ovation Prime, которые относятся
-     * к северной полусфере, прогнозу, общему вкладу
-     * авроральных компонент.
-     */
-    private final ArrayList<File> northForecastEnergyFluxFiles
-            = new ArrayList<>();
+//    /**
+//     * Список имен файлов с данными Ovation Prime, которые относятся
+//     * к северной полусфере, прогнозу, общему вкладу
+//     * авроральных компонент.
+//     */
+//    private final ArrayList<File> northForecastEnergyFluxFiles
+//            = new ArrayList<>();
 
-    /**
-     * Список имен файлов с данными Ovation Prime, которые относятся
-     * к северной полусфере, наблюдаемым данным, общему вкладу
-     * авроральных компонент.
-     */
-    private final ArrayList<File> northNowcastEnergyFluxFiles
-            = new ArrayList<>();
+    private final FileArray northForecastEnergyFluxFileArray
+            = new FileArray("north_forecast_total.txt");
 
-    /**
-     * Список имен файлов с данными Ovation Prime, которые относятся
-     * к южной полусфере, прогнозу, общему вкладу
-     * авроральных компонент.
-     */
-    private final ArrayList<File> southForecastEnergyFluxFiles
-            = new ArrayList<>();
+//    /**
+//     * Список имен файлов с данными Ovation Prime, которые относятся
+//     * к северной полусфере, наблюдаемым данным, общему вкладу
+//     * авроральных компонент.
+//     */
+//    private final ArrayList<File> northNowcastEnergyFluxFiles
+//            = new ArrayList<>();
 
-    /**
-     * Список имен файлов с данными Ovation Prime, которые относятся
-     * к южной полусфере, наблюдаемым данным, общему вкладу
-     * авроральных компонент.
-     */
-    private final ArrayList<File> southNowcastEnergyFluxFiles
-            = new ArrayList<>();
+    private final FileArray northNowcastEnergyFluxFileArray
+            = new FileArray("north_nowcast_total.txt");
 
-    /**
-     * Список имен файлов с данными Ovation Prime, которые относятся
-     * к северной полусфере, прогнозу, вкладу рассеянного сияния.
-     */
-    private final ArrayList<File> northForecastDiffuseEnergyFluxFiles
-            = new ArrayList<>();
+//    /**
+//     * Список имен файлов с данными Ovation Prime, которые относятся
+//     * к южной полусфере, прогнозу, общему вкладу
+//     * авроральных компонент.
+//     */
+//    private final ArrayList<File> southForecastEnergyFluxFiles
+//            = new ArrayList<>();
 
-    /**
-     * Список имен файлов с данными Ovation Prime, которые относятся
-     * к северной полусфере, прогнозу, вкладу ионов.
-     */
-    private final ArrayList<File> northForecastIonsEnergyFluxFiles
-            = new ArrayList<>();
+    private final FileArray southForecastEnergyFluxFileArray
+            = new FileArray("south_forecast_total.txt");
 
-    /**
-     * Список имен файлов с данными Ovation Prime, которые относятся
-     * к северной полусфере, прогнозу, вкладу моноэнергетических пиков.
-     */
-    private final ArrayList<File> northForecastMonoEnergyFluxFiles
-            = new ArrayList<>();
+//    /**
+//     * Список имен файлов с данными Ovation Prime, которые относятся
+//     * к южной полусфере, наблюдаемым данным, общему вкладу
+//     * авроральных компонент.
+//     */
+//    private final ArrayList<File> southNowcastEnergyFluxFiles
+//            = new ArrayList<>();
 
-    /**
-     * Список имен файлов с данными Ovation Prime, которые относятся
-     * к северной полусфере, прогнозу, вкладу "broadband" ускорения.
-     */
-    private final ArrayList<File> northForecastWaveEnergyFluxFiles
-            = new ArrayList<>();
+    private final FileArray southNowcastEnergyFluxFileArray
+            = new FileArray("south_nowcast_total.txt");
 
-    /**
-     * Список имен файлов с данными Ovation Prime, которые относятся
-     * к северной полусфере, наблюдаемым данным, вкладу рассеянного сияния.
-     */
-    private final ArrayList<File> northNowcastDiffuseEnergyFluxFiles
-            = new ArrayList<>();
+//    /**
+//     * Список имен файлов с данными Ovation Prime, которые относятся
+//     * к северной полусфере, прогнозу, вкладу рассеянного сияния.
+//     */
+//    private final ArrayList<File> northForecastDiffuseEnergyFluxFiles
+//            = new ArrayList<>();
 
-    /**
-     * Список имен файлов с данными Ovation Prime, которые относятся
-     * к северной полусфере, наблюдаемым данным, вкладу ионов.
-     */
-    private final ArrayList<File> northNowcastIonsEnergyFluxFiles
-            = new ArrayList<>();
+    private final FileArray northForecastDiffuseEnergyFluxFileArray
+            = new FileArray("north_forecast_diffuse.txt");
 
-    /**
-     * Список имен файлов с данными Ovation Prime, которые относятся
-     * к северной полусфере, наблюдаемым данным, вкладу моноэнергетических пиков.
-     */
-    private final ArrayList<File> northNowcastMonoEnergyFluxFiles
-            = new ArrayList<>();
+//    /**
+//     * Список имен файлов с данными Ovation Prime, которые относятся
+//     * к северной полусфере, прогнозу, вкладу ионов.
+//     */
+//    private final ArrayList<File> northForecastIonsEnergyFluxFiles
+//            = new ArrayList<>();
 
-    /**
-     * Список имен файлов с данными Ovation Prime, которые относятся
-     * к северной полусфере, наблюдаемым данным, вкладу "broadband" ускорения.
-     */
-    private final ArrayList<File> northNowcastWaveEnergyFluxFiles
-            = new ArrayList<>();
+    private final FileArray northForecastIonsEnergyFluxFileArray
+            = new FileArray("north_forecast_ions.txt");
 
-    /**
-     * Список имен файлов с данными Ovation Prime, которые относятся
-     * к южной полусфере, прогнозу, вкладу рассеянного сияния.
-     */
-    private final ArrayList<File> southForecastDiffuseEnergyFluxFiles
-            = new ArrayList<>();
+//    /**
+//     * Список имен файлов с данными Ovation Prime, которые относятся
+//     * к северной полусфере, прогнозу, вкладу моноэнергетических пиков.
+//     */
+//    private final ArrayList<File> northForecastMonoEnergyFluxFiles
+//            = new ArrayList<>();
 
-    /**
-     * Список имен файлов с данными Ovation Prime, которые относятся
-     * к южной полусфере, прогнозу, вкладу ионов.
-     */
-    private final ArrayList<File> southForecastIonsEnergyFluxFiles
-            = new ArrayList<>();
+    private final FileArray northForecastMonoEnergyFluxFileArray
+            = new FileArray("north_forecast_mono.txt");
 
-    /**
-     * Список имен файлов с данными Ovation Prime, которые относятся
-     * к южной полусфере, прогнозу, вкладу моноэнергетических пиков.
-     */
-    private final ArrayList<File> southForecastMonoEnergyFluxFiles
-            = new ArrayList<>();
+//    /**
+//     * Список имен файлов с данными Ovation Prime, которые относятся
+//     * к северной полусфере, прогнозу, вкладу "broadband" ускорения.
+//     */
+//    private final ArrayList<File> northForecastWaveEnergyFluxFiles
+//            = new ArrayList<>();
 
-    /**
-     * Список имен файлов с данными Ovation Prime, которые относятся
-     * к южной полусфере, прогнозу, вкладу "broadband" ускорения.
-     */
-    private final ArrayList<File> southForecastWaveEnergyFluxFiles
-            = new ArrayList<>();
+    private final FileArray northForecastWaveEnergyFluxFileArray
+            = new FileArray("north_forecast_wave.txt");
 
-    /**
-     * Список имен файлов с данными Ovation Prime, которые относятся
-     * к южной полусфере, наблюдаемым данным, вкладу рассеянного сияния.
-     */
-    private final ArrayList<File> southNowcastDiffuseEnergyFluxFiles
-            = new ArrayList<>();
+//    /**
+//     * Список имен файлов с данными Ovation Prime, которые относятся
+//     * к северной полусфере, наблюдаемым данным, вкладу рассеянного сияния.
+//     */
+//    private final ArrayList<File> northNowcastDiffuseEnergyFluxFiles
+//            = new ArrayList<>();
 
-    /**
-     * Список имен файлов с данными Ovation Prime, которые относятся
-     * к южной полусфере, наблюдаемым данным, вкладу ионов.
-     */
-    private final ArrayList<File> southNowcastIonsEnergyFluxFiles
-            = new ArrayList<>();
+    private final FileArray northNowcastDiffuseEnergyFluxFileArray
+            = new FileArray("north_nowcast_diffuse.txt");
 
-    /**
-     * Список имен файлов с данными Ovation Prime, которые относятся
-     * к южной полусфере, наблюдаемым данным, вкладу моноэнергетических пиков.
-     */
-    private final ArrayList<File> southNowcastMonoEnergyFluxFiles
-            = new ArrayList<>();
+//    /**
+//     * Список имен файлов с данными Ovation Prime, которые относятся
+//     * к северной полусфере, наблюдаемым данным, вкладу ионов.
+//     */
+//    private final ArrayList<File> northNowcastIonsEnergyFluxFiles
+//            = new ArrayList<>();
 
-    /**
-     * Список имен файлов с данными Ovation Prime, которые относятся
-     * к южной полусфере, наблюдаемым данным, вкладу "broadband" ускорения.
-     */
-    private final ArrayList<File> southNowcastWaveEnergyFluxFiles
-            = new ArrayList<>();
+    private final FileArray northNowcastIonsEnergyFluxFileArray
+            = new FileArray("north_nowcast_ions.txt");
 
-    /**
-     * Выбранный список имен файлов.
-     */
-    private ArrayList<File> files = new ArrayList<>();
+//    /**
+//     * Список имен файлов с данными Ovation Prime, которые относятся
+//     * к северной полусфере, наблюдаемым данным, вкладу моноэнергетических пиков.
+//     */
+//    private final ArrayList<File> northNowcastMonoEnergyFluxFiles
+//            = new ArrayList<>();
+
+    private final FileArray northNowcastMonoEnergyFluxFileArray
+            = new FileArray("north_nowcast_mono.txt");
+
+//    /**
+//     * Список имен файлов с данными Ovation Prime, которые относятся
+//     * к северной полусфере, наблюдаемым данным, вкладу "broadband" ускорения.
+//     */
+//    private final ArrayList<File> northNowcastWaveEnergyFluxFiles
+//            = new ArrayList<>();
+
+    private final FileArray northNowcastWaveEnergyFluxFileArray
+            = new FileArray("north_nowcast_wave.txt");
+
+//    /**
+//     * Список имен файлов с данными Ovation Prime, которые относятся
+//     * к южной полусфере, прогнозу, вкладу рассеянного сияния.
+//     */
+//    private final ArrayList<File> southForecastDiffuseEnergyFluxFiles
+//            = new ArrayList<>();
+
+    private final FileArray southForecastDiffuseEnergyFluxFileArray
+            = new FileArray("south_forecast_diffuse.txt");
+
+//    /**
+//     * Список имен файлов с данными Ovation Prime, которые относятся
+//     * к южной полусфере, прогнозу, вкладу ионов.
+//     */
+//    private final ArrayList<File> southForecastIonsEnergyFluxFiles
+//            = new ArrayList<>();
+
+    private final FileArray southForecastIonsEnergyFluxFileArray
+            = new FileArray("south_forecast_ions.txt");
+
+//    /**
+//     * Список имен файлов с данными Ovation Prime, которые относятся
+//     * к южной полусфере, прогнозу, вкладу моноэнергетических пиков.
+//     */
+//    private final ArrayList<File> southForecastMonoEnergyFluxFiles
+//            = new ArrayList<>();
+
+    private final FileArray southForecastMonoEnergyFluxFileArray
+            = new FileArray("south_forecast_mono.txt");
+
+//    /**
+//     * Список имен файлов с данными Ovation Prime, которые относятся
+//     * к южной полусфере, прогнозу, вкладу "broadband" ускорения.
+//     */
+//    private final ArrayList<File> southForecastWaveEnergyFluxFiles
+//            = new ArrayList<>();
+
+    private final FileArray southForecastWaveEnergyFluxFileArray
+            = new FileArray("south_forecast_wave.txt");
+
+//    /**
+//     * Список имен файлов с данными Ovation Prime, которые относятся
+//     * к южной полусфере, наблюдаемым данным, вкладу рассеянного сияния.
+//     */
+//    private final ArrayList<File> southNowcastDiffuseEnergyFluxFiles
+//            = new ArrayList<>();
+
+    private final FileArray southNowcastDiffuseEnergyFluxFileArray
+            = new FileArray("south_nowcast_diffuse.txt");
+
+//    /**
+//     * Список имен файлов с данными Ovation Prime, которые относятся
+//     * к южной полусфере, наблюдаемым данным, вкладу ионов.
+//     */
+//    private final ArrayList<File> southNowcastIonsEnergyFluxFiles
+//            = new ArrayList<>();
+
+    private final FileArray southNowcastIonsEnergyFluxFileArray
+            = new FileArray("south_nowcast_ions.txt");
+
+//    /**
+//     * Список имен файлов с данными Ovation Prime, которые относятся
+//     * к южной полусфере, наблюдаемым данным, вкладу моноэнергетических пиков.
+//     */
+//    private final ArrayList<File> southNowcastMonoEnergyFluxFiles
+//            = new ArrayList<>();
+
+    private final FileArray southNowcastMonoEnergyFluxFileArray
+            = new FileArray("south_nowcast_mono.txt");
+
+//    /**
+//     * Список имен файлов с данными Ovation Prime, которые относятся
+//     * к южной полусфере, наблюдаемым данным, вкладу "broadband" ускорения.
+//     */
+//    private final ArrayList<File> southNowcastWaveEnergyFluxFiles
+//            = new ArrayList<>();
+
+    private final FileArray southNowcastWaveEnergyFluxFileArray
+            = new FileArray("south_nowcast_wave.txt");
+
+//    /**
+//     * Выбранный список имен файлов.
+//     */
+//    private ArrayList<File> files = new ArrayList<>();
+
+    private FileArray fileArray;
 
     /**
      * Флажок, который поднят, если на компоненте для рисования
@@ -209,24 +268,6 @@ public class Model {
     public boolean showInfoFlag = false;
 
     private Options options;
-
-//    /**
-//     * Флажок, который поднят, если на компоненте для рисования
-//     * нужно отображать границу.
-//     */
-//    public boolean showMarginFlag = true;
-
-//    /**
-//     * Флажок, который поднят, если на компоненте для рисования
-//     * нужно отображать тепловую карту.
-//     */
-//    public boolean showHeatmapFlag = true;
-
-//    /**
-//     * Флажок, который поднят, если на компоненте для рисования
-//     * нужно отображать сглаженную границу.
-//     */
-//    public boolean smoothMarginFlag = true;
 
     /**
      * Время ожидания в секундах между сеансами автозаргузки данных.
@@ -279,11 +320,11 @@ public class Model {
      *
      * @param mainFrame главный фрейм.
      */
-    public Model(MainFrame mainFrame) {
+    public Model(MainFrame mainFrame) throws IOException {
         this.mainFrame = mainFrame;
     }
 
-    public void loadOptions() {
+    public void loadOptions() throws IOException {
         try {
             setOptions(Options.read());
         } catch (Exception exception) {
@@ -297,7 +338,7 @@ public class Model {
         }
     }
 
-    public void setOptions(Options options) {
+    public void setOptions(Options options) throws IOException {
         this.options = options;
 
         try {
@@ -325,7 +366,7 @@ public class Model {
      *
      * @param fileType описанный тип файлов.
      */
-    public void setFileType(FileType fileType) {
+    public void setFileType(FileType fileType) throws IOException {
         options.fileType = fileType;
         selectFiles();
     }
@@ -336,7 +377,7 @@ public class Model {
      * @return описанный размер списка.
      */
     public int getFilesSize() {
-        return files.size();
+        return fileArray.size();
     }
 
     /**
@@ -344,8 +385,11 @@ public class Model {
      *
      * @return описанное имя файла.
      */
-    public String getCurrentFileName() {
-        return files.get(currentFileIndex).getName();
+    public String getCurrentFileName() throws IOException {
+        String path = fileArray.get(currentFileIndex);
+        File file = new File(path);
+
+        return file.getName();
     }
 
     /**
@@ -353,8 +397,8 @@ public class Model {
      *
      * @param fileIndex упомянутый индекс файла.
      */
-    public void gotoCertainFile(int fileIndex) {
-        if ((fileIndex < 0) || (fileIndex > files.size() - 1)) {
+    public void gotoCertainFile(int fileIndex) throws IOException {
+        if ((fileIndex < 0) || (fileIndex > fileArray.size() - 1)) {
             return;
         }
 
@@ -363,48 +407,49 @@ public class Model {
 
         mainFrame.currentFileNumberTextField.setText(String.valueOf(currentFileIndex + 1));
         mainFrame.fileNumberSlider.setValue(currentFileIndex);
-        mainFrame.fileNameTextField.setText(files.get(currentFileIndex).getName());
+        File file = new File(fileArray.get(currentFileIndex));
+        mainFrame.fileNameTextField.setText(file.getName());
         mainFrame.visualize();
     }
 
     /**
      * Переходим к следующему файлу.
      */
-    public void gotoNextFile() {
+    public void gotoNextFile() throws IOException {
         gotoCertainFile(currentFileIndex + 1);
     }
 
     /**
      * Переходим к предыдущему файлу.
      */
-    public void gotoPreviousFile() {
+    public void gotoPreviousFile() throws IOException {
         gotoCertainFile(currentFileIndex - 1);
     }
 
     /**
      * Очищаем все списки файлов.
      */
-    public void clear() {
-        northForecastEnergyFluxFiles.clear();
-        northNowcastEnergyFluxFiles.clear();
-        southForecastEnergyFluxFiles.clear();
-        southNowcastEnergyFluxFiles.clear();
-        northForecastDiffuseEnergyFluxFiles.clear();
-        northForecastIonsEnergyFluxFiles.clear();
-        northForecastMonoEnergyFluxFiles.clear();
-        northForecastWaveEnergyFluxFiles.clear();
-        northNowcastDiffuseEnergyFluxFiles.clear();
-        northNowcastIonsEnergyFluxFiles.clear();
-        northNowcastMonoEnergyFluxFiles.clear();
-        northNowcastWaveEnergyFluxFiles.clear();
-        southForecastDiffuseEnergyFluxFiles.clear();
-        southForecastIonsEnergyFluxFiles.clear();
-        southForecastMonoEnergyFluxFiles.clear();
-        southForecastWaveEnergyFluxFiles.clear();
-        southNowcastDiffuseEnergyFluxFiles.clear();
-        southNowcastIonsEnergyFluxFiles.clear();
-        southNowcastMonoEnergyFluxFiles.clear();
-        southNowcastWaveEnergyFluxFiles.clear();
+    public void clear() throws IOException {
+        northForecastEnergyFluxFileArray.clear();
+        northNowcastEnergyFluxFileArray.clear();
+        southForecastEnergyFluxFileArray.clear();
+        southNowcastEnergyFluxFileArray.clear();
+        northForecastDiffuseEnergyFluxFileArray.clear();
+        northForecastIonsEnergyFluxFileArray.clear();
+        northForecastMonoEnergyFluxFileArray.clear();
+        northForecastWaveEnergyFluxFileArray.clear();
+        northNowcastDiffuseEnergyFluxFileArray.clear();
+        northNowcastIonsEnergyFluxFileArray.clear();
+        northNowcastMonoEnergyFluxFileArray.clear();
+        northNowcastWaveEnergyFluxFileArray.clear();
+        southForecastDiffuseEnergyFluxFileArray.clear();
+        southForecastIonsEnergyFluxFileArray.clear();
+        southForecastMonoEnergyFluxFileArray.clear();
+        southForecastWaveEnergyFluxFileArray.clear();
+        southNowcastDiffuseEnergyFluxFileArray.clear();
+        southNowcastIonsEnergyFluxFileArray.clear();
+        southNowcastMonoEnergyFluxFileArray.clear();
+        southNowcastWaveEnergyFluxFileArray.clear();
     }
 
     /**
@@ -412,7 +457,7 @@ public class Model {
      *
      * @param file упомянутый файл.
      */
-    public void distributeFile(File file) {
+    public void distributeFile(File file) throws IOException {
         if (file.getName().contains("north")) {
             distributeNorthFile(file);
         } else if (file.getName().contains("south")) {
@@ -423,16 +468,16 @@ public class Model {
     /**
      * Выбираем список файлов для визуализации.
      */
-    public void selectFiles() {
+    public void selectFiles() throws IOException {
         if (options.fileType.horizonSideType() == HorizonSideType.NORTH) {
             selectNorthFiles();
         } else if (options.fileType.horizonSideType() == HorizonSideType.SOUTH) {
             selectSouthFiles();
         }
 
-        mainFrame.totalFileNumberTextField.setText(String.valueOf(files.size()));
+        mainFrame.totalFileNumberTextField.setText(String.valueOf(fileArray.size()));
         mainFrame.fileNumberSlider.setMinimum(0);
-        mainFrame.fileNumberSlider.setMaximum(files.size() - 1);
+        mainFrame.fileNumberSlider.setMaximum(fileArray.size() - 1);
         mainFrame.fileNumberSlider.setValue(0);
         mainFrame.model.gotoCertainFile(0);
     }
@@ -443,7 +488,7 @@ public class Model {
      *
      * @param file упомянутый файл.
      */
-    private void distributeNorthFile(File file) {
+    private void distributeNorthFile(File file) throws IOException {
         if (file.getName().contains("forecast")) {
             distributeNorthForecastFile(file);
         } else if (file.getName().contains("nowcast")) {
@@ -469,7 +514,7 @@ public class Model {
      *
      * @param file упомянутый файл.
      */
-    private void distributeSouthFile(File file) {
+    private void distributeSouthFile(File file) throws IOException {
         if (file.getName().contains("forecast")) {
             distributeSouthForecastFile(file);
         } else if (file.getName().contains("nowcast")) {
@@ -495,17 +540,17 @@ public class Model {
      *
      * @param file упомянутый файл.
      */
-    private void distributeNorthForecastFile(File file) {
+    private void distributeNorthForecastFile(File file) throws IOException {
         if (file.getName().contains("diffuse")) {
-            northForecastDiffuseEnergyFluxFiles.add(file);
+            northForecastDiffuseEnergyFluxFileArray.add(file.getAbsolutePath());
         } else if (file.getName().contains("ions")) {
-            northForecastIonsEnergyFluxFiles.add(file);
+            northForecastIonsEnergyFluxFileArray.add(file.getAbsolutePath());
         } else if (file.getName().contains("mono")) {
-            northForecastMonoEnergyFluxFiles.add(file);
+            northForecastMonoEnergyFluxFileArray.add(file.getAbsolutePath());
         } else if (file.getName().contains("wave")) {
-            northForecastWaveEnergyFluxFiles.add(file);
+            northForecastWaveEnergyFluxFileArray.add(file.getAbsolutePath());
         } else {
-            northForecastEnergyFluxFiles.add(file);
+            northForecastEnergyFluxFileArray.add(file.getAbsolutePath());
         }
     }
 
@@ -515,15 +560,15 @@ public class Model {
      */
     private void selectNorthForecastFiles() {
         if (options.fileType.energyType() == EnergyType.DIFFUSE) {
-            files = northForecastDiffuseEnergyFluxFiles;
+            fileArray = northForecastDiffuseEnergyFluxFileArray;
         } else if (options.fileType.energyType() == EnergyType.IONS) {
-            files = northForecastIonsEnergyFluxFiles;
+            fileArray = northForecastIonsEnergyFluxFileArray;
         } else if (options.fileType.energyType() == EnergyType.MONO) {
-            files = northForecastMonoEnergyFluxFiles;
+            fileArray = northForecastMonoEnergyFluxFileArray;
         } else if (options.fileType.energyType() == EnergyType.WAVE) {
-            files = northForecastWaveEnergyFluxFiles;
+            fileArray = northForecastWaveEnergyFluxFileArray;
         } else {
-            files = northForecastEnergyFluxFiles;
+            fileArray = northForecastEnergyFluxFileArray;
         }
     }
 
@@ -533,17 +578,17 @@ public class Model {
      *
      * @param file упомянутый файл.
      */
-    private void distributeNorthNowcastFile(File file) {
+    private void distributeNorthNowcastFile(File file) throws IOException {
         if (file.getName().contains("diffuse")) {
-            northNowcastDiffuseEnergyFluxFiles.add(file);
+            northNowcastDiffuseEnergyFluxFileArray.add(file.getAbsolutePath());
         } else if (file.getName().contains("ions")) {
-            northNowcastIonsEnergyFluxFiles.add(file);
+            northNowcastIonsEnergyFluxFileArray.add(file.getAbsolutePath());
         } else if (file.getName().contains("mono")) {
-            northNowcastMonoEnergyFluxFiles.add(file);
+            northNowcastMonoEnergyFluxFileArray.add(file.getAbsolutePath());
         } else if (file.getName().contains("wave")) {
-            northNowcastWaveEnergyFluxFiles.add(file);
+            northNowcastWaveEnergyFluxFileArray.add(file.getAbsolutePath());
         } else {
-            northNowcastEnergyFluxFiles.add(file);
+            northNowcastEnergyFluxFileArray.add(file.getAbsolutePath());
         }
     }
 
@@ -553,15 +598,15 @@ public class Model {
      */
     private void selectNorthNowcastFiles() {
         if (options.fileType.energyType() == EnergyType.DIFFUSE) {
-            files = northNowcastDiffuseEnergyFluxFiles;
+            fileArray = northNowcastDiffuseEnergyFluxFileArray;
         } else if (options.fileType.energyType() == EnergyType.IONS) {
-            files = northNowcastIonsEnergyFluxFiles;
+            fileArray = northNowcastIonsEnergyFluxFileArray;
         } else if (options.fileType.energyType() == EnergyType.MONO) {
-            files = northNowcastMonoEnergyFluxFiles;
+            fileArray = northNowcastMonoEnergyFluxFileArray;
         } else if (options.fileType.energyType() == EnergyType.WAVE) {
-            files = northNowcastWaveEnergyFluxFiles;
+            fileArray = northNowcastWaveEnergyFluxFileArray;
         } else {
-            files = northNowcastEnergyFluxFiles;
+            fileArray = northNowcastEnergyFluxFileArray;
         }
     }
 
@@ -571,17 +616,17 @@ public class Model {
      *
      * @param file упомянутый файл.
      */
-    private void distributeSouthForecastFile(File file) {
+    private void distributeSouthForecastFile(File file) throws IOException {
         if (file.getName().contains("diffuse")) {
-            southForecastDiffuseEnergyFluxFiles.add(file);
+            southForecastDiffuseEnergyFluxFileArray.add(file.getAbsolutePath());
         } else if (file.getName().contains("ions")) {
-            southForecastIonsEnergyFluxFiles.add(file);
+            southForecastIonsEnergyFluxFileArray.add(file.getAbsolutePath());
         } else if (file.getName().contains("mono")) {
-            southForecastMonoEnergyFluxFiles.add(file);
+            southForecastMonoEnergyFluxFileArray.add(file.getAbsolutePath());
         } else if (file.getName().contains("wave")) {
-            southForecastWaveEnergyFluxFiles.add(file);
+            southForecastWaveEnergyFluxFileArray.add(file.getAbsolutePath());
         } else {
-            southForecastEnergyFluxFiles.add(file);
+            southForecastEnergyFluxFileArray.add(file.getAbsolutePath());
         }
     }
 
@@ -591,15 +636,15 @@ public class Model {
      */
     private void selectSouthForecastFiles() {
         if (options.fileType.energyType() == EnergyType.DIFFUSE) {
-            files = southForecastDiffuseEnergyFluxFiles;
+            fileArray = southForecastDiffuseEnergyFluxFileArray;
         } else if (options.fileType.energyType() == EnergyType.IONS) {
-            files = southForecastIonsEnergyFluxFiles;
+            fileArray = southForecastIonsEnergyFluxFileArray;
         } else if (options.fileType.energyType() == EnergyType.MONO) {
-            files = southForecastMonoEnergyFluxFiles;
+            fileArray = southForecastMonoEnergyFluxFileArray;
         } else if (options.fileType.energyType() == EnergyType.WAVE) {
-            files = southForecastWaveEnergyFluxFiles;
+            fileArray = southForecastWaveEnergyFluxFileArray;
         } else {
-            files = southForecastEnergyFluxFiles;
+            fileArray = southForecastEnergyFluxFileArray;
         }
     }
 
@@ -609,17 +654,17 @@ public class Model {
      *
      * @param file упомянутый файл.
      */
-    private void distributeSouthNowcastFile(File file) {
+    private void distributeSouthNowcastFile(File file) throws IOException {
         if (file.getName().contains("diffuse")) {
-            southNowcastDiffuseEnergyFluxFiles.add(file);
+            southNowcastDiffuseEnergyFluxFileArray.add(file.getAbsolutePath());
         } else if (file.getName().contains("ions")) {
-            southNowcastIonsEnergyFluxFiles.add(file);
+            southNowcastIonsEnergyFluxFileArray.add(file.getAbsolutePath());
         } else if (file.getName().contains("mono")) {
-            southNowcastMonoEnergyFluxFiles.add(file);
+            southNowcastMonoEnergyFluxFileArray.add(file.getAbsolutePath());
         } else if (file.getName().contains("wave")) {
-            southNowcastWaveEnergyFluxFiles.add(file);
+            southNowcastWaveEnergyFluxFileArray.add(file.getAbsolutePath());
         } else {
-            southNowcastEnergyFluxFiles.add(file);
+            southNowcastEnergyFluxFileArray.add(file.getAbsolutePath());
         }
     }
 
@@ -629,33 +674,37 @@ public class Model {
      */
     private void selectSouthNowcastFiles() {
         if (options.fileType.energyType() == EnergyType.DIFFUSE) {
-            files = southNowcastDiffuseEnergyFluxFiles;
+            fileArray = southNowcastDiffuseEnergyFluxFileArray;
         } else if (options.fileType.energyType() == EnergyType.IONS) {
-            files = southNowcastIonsEnergyFluxFiles;
+            fileArray = southNowcastIonsEnergyFluxFileArray;
         } else if (options.fileType.energyType() == EnergyType.MONO) {
-            files = southNowcastMonoEnergyFluxFiles;
+            fileArray = southNowcastMonoEnergyFluxFileArray;
         } else if (options.fileType.energyType() == EnergyType.WAVE) {
-            files = southNowcastWaveEnergyFluxFiles;
+            fileArray = southNowcastWaveEnergyFluxFileArray;
         } else {
-            files = southNowcastEnergyFluxFiles;
+            fileArray = southNowcastEnergyFluxFileArray;
         }
     }
 
     /**
      * Загружаем список единиц геонформационных данных из файла.
      */
-    private void load() {
+    private void load() throws IOException {
         geoinformationDataUnits.clear();
 
-        Path filePath
-                = Paths.get(files.get(currentFileIndex).getAbsolutePath());
-        Charset charset = StandardCharsets.UTF_8;
-        List<String> lines;
+        BufferedReader bufferedReader = new BufferedReader (new FileReader(fileArray.get(currentFileIndex)));
+        List<String> lines = new ArrayList<>();
 
         try {
-            lines = Files.readAllLines(filePath, charset);
+            String line;
+            while((line = bufferedReader.readLine())!=null){
+                lines.add(line);
+            }
+
+            bufferedReader.close();
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Ошибка при чтении файла " + filePath);
+            JOptionPane.showMessageDialog(null,
+                    "Ошибка при чтении файла " + fileArray.get(currentFileIndex));
             return;
         }
 
@@ -695,14 +744,16 @@ public class Model {
      *
      * @param calendar календарь с ифнмормацией об упомянутых дате и времени.
      */
-    public void gotoFileWithSelectedDateAndTime(Calendar calendar) {
+    public void gotoFileWithSelectedDateAndTime(Calendar calendar) throws IOException {
         int indexOfSelectedFile = 0;
+        File file = new File(fileArray.get(0));
         long elapsed = Math.abs(calendar.getTime().getTime()
-                - getCalendarFromFileName(files.get(0).getName()).getTime().getTime());
+                - getCalendarFromFileName(file.getName()).getTime().getTime());
 
-        for (int i = 1; i < files.size(); ++i) {
+        for (int i = 1; i < fileArray.size(); ++i) {
+            File anotherFile = new File(fileArray.get(i));
             long currentElapsed = Math.abs(calendar.getTime().getTime()
-                    - getCalendarFromFileName(files.get(i).getName()).getTime().getTime());
+                    - getCalendarFromFileName(anotherFile.getName()).getTime().getTime());
 
             if (currentElapsed < elapsed) {
                 indexOfSelectedFile = i;
